@@ -25,7 +25,7 @@ var connection = mysql.createConnection({
   port: 3306,
   user: "root",
   password: "535649",
-  database: "grocery_listDB",
+  database: "grocery_listDB"
 });
 
 connection.connect(function (err) {
@@ -44,7 +44,7 @@ app.get("/", function (req, res) {
       return res.status(500).end();
     }
     //otherwise show the existing grocery list
-    res.render("index", { items: data });
+    res.render("index", {items:data});
   });
 });
 
@@ -78,8 +78,7 @@ app.post("/api/items", function (req, res) {
       //otherwise send id of the new item
       res.json({ id: data.insertId });
       console.log({ id: data.insertId });
-    }
-  );
+    });
 });
 
 //RETREIVE the new grocery list ***************************************************
