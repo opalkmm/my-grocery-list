@@ -13,10 +13,10 @@
 <h3>Add an Item</h3>
 <form id="additems" class="button-size">
     <textarea type="text" name="items"></textarea>
-    <button type="submit">Save</button>
+    <button type="submit">Add</button>
 </form>
 
-
+<hr>
 {{!-- update the existing items on the list with 2 fields - id, and item name  --}}
 <h3>Update an Item</h3>
 <form id="updateitems" class="button-size">
@@ -58,7 +58,7 @@
             data: newItem
         }).then(
             function () {
-                console.log("new item addded", newItem);
+                console.log("new item addded");
                 // reload, show updated grocery list
                 location.reload();
             }
@@ -75,7 +75,7 @@
         let updatedItem = { items: $("#updateitems [name=items]").val().trim() }
 
         //PUT REQUEST
-        $.ajax("/api/items/"{
+        $.ajax("/api/items/" + id,{
             type: "PUT",
             data: updatedItem
         }).then(
