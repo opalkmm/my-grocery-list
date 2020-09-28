@@ -30,6 +30,7 @@
     //when the del button next to the item is clicked
     $(".delitems").on("click", function (e) {
         //get id from the button to be deleted
+        console.log('delete button works');
         let id = $(this).data("itemsid")
 
         //DELETE REQUEST
@@ -53,7 +54,7 @@
         let newItem = { items: $("#additems [name=items]").val().trim() };
 
         //POST REQUEST
-        $.ajax("/api/items/"{
+        $.ajax("/api/items/",{
             type: "POST",
             data: newItem
         }).then(
@@ -70,7 +71,7 @@
         //prevent default on submit request
         e.preventDefault();
         //get input value from the form(id)
-        let id = ("[name=id]").val().trim()
+        let id = $("[name=id]").val().trim();
         //get input value from the form(name of the new Item)
         let updatedItem = { items: $("#updateitems [name=items]").val().trim() }
 
