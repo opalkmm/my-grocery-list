@@ -1,0 +1,89 @@
+<h1>Grocery List</h1>
+<ul>
+    {{#each items}}
+    <li>
+        <p>
+            {{this.id}}. {{this.items}}
+            <button data-itemsid="{{this.id}}" class="delitems">Delete</button>
+        </p>
+    </li>
+    {{/each}}
+</ul>
+{{!-- add the name of the items to the list --}}
+<h3>Add an Item</h3>
+<form id="additems" class="button-size">
+    <textarea type="text" name="items"></textarea>
+    <button type="submit">Save</button>
+</form>
+
+
+{{!-- update the existing items on the list with 2 fields - id, and item name  --}}
+<h3>Update an Item</h3>
+<form id="updateitems" class="button-size">
+    <input type="text" name="id" placeholder="id">
+    <textarea type="text" name="items" placeholder="enter the new item"></textarea>
+    <button type="submit">Update</button>
+</form>
+
+{{!-- logic for buttons --}}
+<script type="text/javascript">
+    //when the del button next to the item is clicked
+    $(".delitems").on("click", function (e) {
+        //get id from the button to be deleted
+        let id = $(this).data("itemsid")
+
+        //DELETE REQUEST
+        $.ajax("/api/items/" + id, {
+            type: "DELETE"
+        }).then(
+            function () {
+                console.log("requested id to delete ", id);
+                // reload, show updated grocery list
+                location.reload();
+            }
+        );
+    })
+
+    //when subm button is clicked to add item to the list
+    $("#additems").on("submit", function (e) {
+        //prevent default on submit request
+        e.preventDefault();
+        //get input value from the form
+        //variable to use for ajax request 
+        let newItem = { items: $("#additems [name=items]").val().trim() };
+
+        //POST REQUEST
+        $.ajax("/api/items/"{
+            type: "POST",
+            data: newItem
+        }).then(
+            function () {
+                console.log("new item addded", newItem);
+                // reload, show updated grocery list
+                location.reload();
+            }
+        );
+    })
+
+    //when submit button is clicked to update the item (selected id to update, name of the new item)
+    $("#updateitems").on("submit", function (e) {
+        //prevent default on submit request
+        e.preventDefault();
+        //get input value from the form(id)
+        let id = ("[name=id]").val().trim()
+        //get input value from the form(name of the new Item)
+        let updatedItem = { items: $("#updateitems [name=items]").val().trim() }
+
+        //PUT REQUEST
+        $.ajax("/api/items/"{
+            type: "PUT",
+            data: updatedItem
+        }).then(
+            function () {
+                console.log("updated id", id);
+                // reload, show updated grocery list
+                location.reload();
+            }
+        );
+    })
+</script>
